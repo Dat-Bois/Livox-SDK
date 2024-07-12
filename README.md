@@ -1,15 +1,8 @@
-[中文版本使用说明](<https://github.com/Livox-SDK/Livox-SDK/blob/master/README_CN.md>)
-
 # 1 Introduction
 
 Livox SDK is the software development kit designed for all Livox products. It is developed based on C/C++ following Livox SDK Communication Protocol, and provides easy-to-use C style API. With Livox SDK, users can quickly connect to Livox products and receive point cloud data. 
 
 Livox SDK consists of Livox SDK communication protocol, Livox SDK core, Livox SDK API, Linux sample, and ROS demo. 
-
-## Prerequisites
-* Ubuntu 14.04/Ubuntu 16.04/Ubuntu 18.04, both x86 and ARM (Nvidia TX2)
-* Windows 7/10, Visual Studio 2015 Update3/2017/2019
-* C++11 compiler
 
 # 2 Livox SDK Communication Protocol
 
@@ -30,8 +23,7 @@ The Livox LiDAR sensors can be connected to host directly or through the Livox H
 Livox SDK API provides a set of C style functions which can be conveniently integrated in C/C++ programs. Please refer to the [Livox SDK API Reference](https://livox-sdk.github.io/Livox-SDK-Doc/) for further information.
 
 ## 4.1 Installation
-The installation procedures in Ubuntu 18.04/16.04/14.04 LTS and Windows 7/10 are shown here as examples. For Ubuntu 18.04/16.04/14.04 32-bit LTS and Mac, you can get it in [Livox-SDK wiki](https://github.com/Livox-SDK/Livox-SDK/wiki).
-### 4.1.1 Ubuntu 18.04/16.04/14.04 LTS
+
 #### Dependencies
 Livox SDK requires [CMake 3.0.0+](https://cmake.org/) as dependencies. You can install these packages using apt:
 ```
@@ -41,113 +33,18 @@ sudo apt install cmake
 
 In the Livox SDK directory, run the following commands to compile the project:
 ```
-git clone https://github.com/Livox-SDK/Livox-SDK.git
+git clone https://github.com/Dat-Bois/Livox-SDK.git
 cd Livox-SDK
 cd build && cmake ..
 make
 sudo make install
 ```
 
-### 4.1.2 Windows 7/10
-
-#### Dependencies
-Livox SDK supports Visual Studio 2015 Update3/2017/2019 and requires install [CMake 3.0.0+](https://cmake.org/) as dependencies.  
-
-In the Livox SDK directory, run the following commands to create the Visual Studio solution file. 
-Generate the 32-bit project:
-
-```
-cd Livox-SDK/build
-```
-For Viusal Studio 2015 Update3/2017:
-```
-cmake ..
-```
-For Viusal Studio 2019:
-```
-cmake .. -G "Visual Studio 16 2019" -A Win32
-```
-Generate the 64-bit project:
-```
-cd Livox-SDK/build 
-```
-For Viusal Studio 2015 Update3:
-```
-cmake .. -G "Visual Studio 14 2015 Win64"
-```
-For Viusal Studio 2017:
-```
-cmake .. -G "Visual Studio 15 2017 Win64"
-```
-For Viusal Studio 2019:
-```
-cmake .. -G "Visual Studio 16 2019" -A x64
-```
-
-#### Compile Livox SDK
-You can now compile the Livox SDK in Visual Studio.
-
-### 4.1.3 ARM-Linux Cross Compile
-
-The procedure of cross compile Livox-SDK in ARM-Linux are shown below.
-
-#### Dependencies
-
-Host machine requires install cmake. You can install these packages using apt:
-
-```
-sudo apt install cmake
-```
-
-#### Cross Compile Toolchain
-
-If your ARM board vendor provides a cross compile toolchain, you can skip the following step of installing the toolchain and use the vendor-supplied cross compile toolchain instead.
-
-The following commands will install C and C++ cross compiler toolchains for 32bit and 64bit ARM board. You need to install the correct toolchain for your ARM board. For 64bit SoC ARM board, only install 64bit toolchain, and for 32bit SoC ARM board, only install 32bit toolchain.
-
-Install **ARM 32 bits cross compile toolchain**：
-
-```
- sudo apt-get install gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
-```
-
-Install **ARM 64 bits cross compile toolchain**：
-
-```
-sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
-```
-
-#### Cross Compile Livox-SDK
-
-For  **ARM 32 bits toolchain**，In the Livox SDK directory，run the following commands to cross compile the project:
-
-```
-cd Livox-SDK
-cd build && \
-cmake .. -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_C_COMPILER=arm-linux-gnueabi-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabi-g++
-make
-```
-
-For **ARM 64 bits toolchain**，In the Livox SDK directory，run the following commands to cross compile the project:
-
-```
-cd Livox-SDK
-cd build && \
-cmake .. -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
-make
-```
-
-**Note:**
-
-- gcc  cross compiler need to support C ++11 standard
-
 ## 4.2 Run Livox SDK Sample
 Two samples are provided in Sample/Lidar and Sample/Hub, which demonstrate how to configure Livox LiDAR units and receive the point cloud data when directly connecting Livox SDK to LiDAR units or by using a Livox Hub, respectively. The sequence diagram is shown as below: 
 
 ![](doc/images/sample.png)
 
-### 4.2.1 Ubuntu 18.04/16.04 /14.04 LTS
-For Ubuntun 18.04/16.04/14.04 LTS, run the *lidar_sample* if connect with the LiDAR unit(s):
 ```
 cd sample/lidar && ./lidar_sample
 ```
@@ -155,12 +52,6 @@ or run the *hub_sample* if connect with the hub unit(s):
 ```
 cd sample/hub && ./hub_sample
 ```
-### 4.2.2 Windows 7/10
-After compiling the Livox SDK as shown in section 4.1.2, you can find `hub_sample.exe` or `lidar_sample.exe` in the {Livox-SDK}\build\sample\hub\Debug or {Livox-SDK}\build\sample\lidar\Debug folder, respectively, which can be run directly. 
-
-Then you can see the information as below:
-
-![](doc/images/sdk_init.png)
 
 ### 4.3 Connect to the specific LiDAR units
 
@@ -229,9 +120,3 @@ Here is the example:
 ./lidar_lvx_sample -c "00000000000002&00000000000003&00000000000004" -l -t 10 -p
 ./hub_lvx_sample -c "00000000000001" -l -t 10
 ```
-
-# 5 Support
-
-You can get support from Livox with the following methods:
-* Send email to cs@livoxtech.com with a clear description of your problem and your setup
-* Github Issues
